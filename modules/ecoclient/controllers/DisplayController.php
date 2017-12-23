@@ -1,6 +1,6 @@
 <?php
 
-namespace ut8ia\ecoclient\controllers;
+namespace ut8ia\ecoclient\modules\ecoclient\controllers;
 
 use ut8ia\ecoclient\helpers\CommonHelper;
 use ut8ia\ecoclient\helpers\ReportBuilder;

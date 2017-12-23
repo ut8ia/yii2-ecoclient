@@ -2,48 +2,33 @@
 
 namespace ut8ia\ecoclient\client;
 
-use ut8ia\ecoclient\client\models\RequestModel;
-use ut8ia\ecoclient\client\models\ResponseModel;
 use yii\base\BaseObject;
 use Yii;
 
+/**
+ * Class Client
+ * @package ut8ia\ecoclient\client
+ */
 class Client extends BaseObject
 {
 
     private $host;
     private $key;
-    private $endpoint;
-
-    private $body;
+    public $endpoint;
+    public $body;
+    public $responseModel;
 
     public function init()
     {
-        $this->host = Yii::$app->params['apihost'];
-        $this->key =  Yii::$app->params['apikey'];
+        $this->host = Yii::$app->params['ecoclient']['apihost'];
+        $this->key = Yii::$app->params['ecoclient']['apikey'];
     }
-
-    public function send($reportId)
-    {
-        $this->endpoint = 'v1/report';
-
-        $requestModel = new RequestModel();
-        if (!$requestModel->prepare($reportId)) {
-            return false;
-        }
-        $this->body = $requestModel->toJson();
-        return $this->makeRequest();
-    }
-
-    public function makeCallback()
-    {
-
-    }
-
 
     /**
+     * @param null $post
      * @return bool
      */
-    private function makeRequest()
+    public function makeRequest($post = null)
     {
 
         $headers = [
@@ -55,8 +40,10 @@ class Client extends BaseObject
         curl_setopt($ch, CURLOPT_URL, $this->host . $this->endpoint);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->body);
-        curl_setopt($ch, CURLOPT_POST, 1);
+        if ($post) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $this->body);
+            curl_setopt($ch, CURLOPT_POST, 1);
+        }
 
         try {
             $response = curl_exec($ch);
@@ -75,10 +62,8 @@ class Client extends BaseObject
      */
     private function catchResponse($response)
     {
-        $responseModel = new ResponseModel();
-        $responseModel->load(['ResponseModel' => json_decode($response, true)]);
-        $responseModel->validate();
-        return $responseModel->isSuccess();
+        $this->responseModel->load([$this->responseModel->formName() => json_decode($response, true)]);
+        return $this->responseModel->validate();
     }
 
 
