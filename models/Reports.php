@@ -19,7 +19,7 @@ class Reports extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'reports';
+        return '{reports}';
     }
 
     /**
@@ -28,8 +28,8 @@ class Reports extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['unit_id'], 'required'],
-            [['unit_id'], 'integer'],
+            [['id', 'unit_id'], 'required'],
+            [['id', 'unit_id'], 'integer'],
             [['formed', 'received'], 'safe'],
         ];
     }
@@ -45,18 +45,6 @@ class Reports extends \yii\db\ActiveRecord
             'formed' => Yii::t('app', 'Formed'),
             'received' => Yii::t('app', 'Received'),
         ];
-    }
-
-
-    /**
-     * @param $formed
-     * @return Reports
-     */
-    public function makeReport($formed)
-    {
-        $this->formed = $formed;
-        $this->unit_id = Yii::$app->user->identity->id;
-        return $this->save();
     }
 
 
