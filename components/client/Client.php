@@ -1,9 +1,12 @@
 <?php
 
-namespace ut8ia\ecoclient\client;
+namespace ut8ia\ecoclient\components\client;
 
 use yii\base\BaseObject;
 use Yii;
+use yii\base\InvalidConfigException;
+use yii\base\InvalidParamException;
+use yii\base\Model;
 
 /**
  * Class Client
@@ -16,6 +19,7 @@ class Client extends BaseObject
     private $key;
     public $endpoint;
     public $body;
+    /** @var  $responseModel Model */
     public $responseModel;
 
     public function init()
@@ -59,6 +63,8 @@ class Client extends BaseObject
     /**
      * @param $response
      * @return boolean
+     * @throws InvalidConfigException
+     * @throws InvalidParamException
      */
     private function catchResponse($response)
     {

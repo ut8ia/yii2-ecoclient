@@ -29,8 +29,8 @@ class m171223_205721_init_functionality extends Migration
         $this->createTable(Reports::tableName(), [
             'id' => $this->integer(11)->notNull(),
             'unit_id' => $this->integer(11)->notNull(),
-            'formed' => $this->timestamp()->notNull(),
-            'received' => $this->timestamp()->notNull(),
+            'formed' => "TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP",
+            'received' => "TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP",
         ], $tableOptions);
 
         $this->createIndex('reports_id_uniq', Reports::tableName(), 'id', true);
@@ -39,13 +39,13 @@ class m171223_205721_init_functionality extends Migration
         $this->createTable(Parameters::tableName(), [
             'id' => $this->integer(11)->notNull(),
             'type' => $this->integer(11)->notNull(),
-            'value' => $this->timestamp()->notNull(),
-            'report_id' => $this->timestamp()->notNull(),
+            'value' => $this->integer(11)->notNull(),
+            'report_id' => $this->integer(11)->notNull(),
         ], $tableOptions);
 
-        $this->createIndex('parameters_id_uniq', Reports::tableName(), 'id', true);
-
-
+        $this->addPrimaryKey('parameters_pk', Parameters::tableName(), 'id');
+        $this->alterColumn(Parameters::tableName(), 'id', $this->integer(11) . ' NOT NULL AUTO_INCREMENT');
+        
     }
 
     public function down()

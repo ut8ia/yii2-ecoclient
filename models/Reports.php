@@ -19,7 +19,7 @@ class Reports extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{reports}';
+        return '{{reports}}';
     }
 
     /**
@@ -28,7 +28,7 @@ class Reports extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'unit_id'], 'required'],
+            [['id', 'unit_id', 'formed'], 'required'],
             [['id', 'unit_id'], 'integer'],
             [['formed', 'received'], 'safe'],
         ];

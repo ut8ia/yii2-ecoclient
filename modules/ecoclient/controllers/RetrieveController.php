@@ -2,11 +2,9 @@
 
 namespace ut8ia\ecoclient\modules\ecoclient\controllers;
 
-use ut8ia\ecoclient\Client;
-use ut8ia\ecoclient\client\Retriever;
-use Yii;
+
+use ut8ia\ecoclient\components\client\Retriever;
 use yii\console\Controller;
-use ut8ia\ecoclient\models\Reports;
 
 /**
  * Console hook controller for data retrieveing
@@ -15,11 +13,13 @@ use ut8ia\ecoclient\models\Reports;
 class RetrieveController extends Controller
 {
 
-
-    public function actionCityreport()
+    /**
+     * @param integer $cityId
+     */
+    public function actionCityreport($cityId)
     {
         $retriver = new Retriever();
-        $retriver->fetchCityreports(1);
+        $retriver->fetchCityreports($cityId);
     }
 
 

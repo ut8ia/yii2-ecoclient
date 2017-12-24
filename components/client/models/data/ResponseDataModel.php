@@ -2,7 +2,7 @@
 
 namespace ut8ia\ecoclient\client\models\data;
 
-use ut8ia\ecoclient\models\Reports;
+use ut8ia\ecoclient\components\client\models\Reports;
 use Yii;
 use yii\base\Model;
 

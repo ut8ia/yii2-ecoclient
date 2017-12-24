@@ -1,6 +1,6 @@
 <?php
 
-namespace ut8ia\ecoclient\client\models;
+namespace ut8ia\ecoclient\components\client\models;
 
 use yii\base\Model;
 
@@ -15,7 +15,7 @@ class CityreportsResponseModel extends Model
     public function rules()
     {
         return [
-            ['data', 'required'],
+            ['data', 'checkReports'],
         ];
     }
 
@@ -29,5 +29,28 @@ class CityreportsResponseModel extends Model
         $this->data = $data[$this->formName()];
         return true;
     }
+
+    /**
+     * Simple validator, no need for DTO model for each badge - may be slow on big pages
+     * like iterator of 'IN' core validator
+     * @return bool
+     */
+    public function checkReports()
+    {
+        if (empty($this->data)) {
+            $this->addError('empty set');
+            return false;
+        }
+
+        foreach ($this->data as $report) {
+            if (isset($report['id']) && isset($report['unit_id']) && isset($report['formed'])) {
+                continue;
+            }
+            $this->addError('bad schema');
+            return false;
+        }
+        return true;
+    }
+
 
 }

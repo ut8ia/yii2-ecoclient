@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'EсoBot';
+$this->title = 'EсoClient';
 use dosamigos\chartjs\ChartJs;
 
 ?>
@@ -11,9 +11,7 @@ use dosamigos\chartjs\ChartJs;
     <div class="jumbotron">
 
         <h1><?= date('d.m.Y'); ?></h1>
-        <p class="lead">забрудненність повітря мікрочастинами, ppm</p>
-
-
+        <p class="lead">Smog microparts, ppm</p>
         <?= ChartJs::widget([
             'type' => 'line',
             'options' => [
@@ -24,7 +22,7 @@ use dosamigos\chartjs\ChartJs;
                 'labels' => $labels,
                 'datasets' => [
                     [
-                        'label' => "2,5 мкм",
+                        'label' => "2,5 micrometers",
                         'backgroundColor' => "rgba(255,99,132,0.2)",
                         'borderColor' => "rgba(255,99,132,1)",
                         'pointBackgroundColor' => "rgba(255,99,132,1)",
@@ -34,7 +32,7 @@ use dosamigos\chartjs\ChartJs;
                         'data' => $dust25
                     ],
                     [
-                        'label' => "10 мкм",
+                        'label' => "10 micrometers",
                         'backgroundColor' => "rgba(179,181,198,0.2)",
                         'borderColor' => "rgba(179,181,198,1)",
                         'pointBackgroundColor' => "rgba(179,181,198,1)",
@@ -49,7 +47,7 @@ use dosamigos\chartjs\ChartJs;
         ?>
 
 
-        <p class="lead">Температура повітря</p>
+        <p class="lead">Air tempertature</p>
 
         <?= ChartJs::widget([
             'type' => 'line',
@@ -61,7 +59,7 @@ use dosamigos\chartjs\ChartJs;
                 'labels' => $labels,
                 'datasets' => [
                     [
-                        'label' => "Температура повітря",
+                        'label' => "Air tempertature",
                         'backgroundColor' => "rgba(159,200,240,0.2)",
                         'borderColor' => "rgba(159,200,240,1)",
                         'pointBackgroundColor' => "rgba(159,200,240,1)",
@@ -75,7 +73,7 @@ use dosamigos\chartjs\ChartJs;
         ]);
         ?>
 
-        <p class="lead">Вологість повітря</p>
+        <p class="lead">Air humidity</p>
 
         <?= ChartJs::widget([
             'type' => 'line',
@@ -87,7 +85,7 @@ use dosamigos\chartjs\ChartJs;
                 'labels' => $labels,
                 'datasets' => [
                     [
-                        'label' => "Вологість повітря",
+                        'label' => "Air humidity",
                         'backgroundColor' => "rgba(55,199,132,0.2)",
                         'borderColor' => "rgba(55,199,132,1)",
                         'pointBackgroundColor' => "rgba(55,199,132,1)",
@@ -100,8 +98,6 @@ use dosamigos\chartjs\ChartJs;
             ]
         ]);
         ?>
-        <br>
-        <p><a class="btn btn-lg btn-success" href="/">Оновити</a></p>
     </div>
 
 </div>

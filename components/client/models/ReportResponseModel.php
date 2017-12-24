@@ -1,12 +1,12 @@
 <?php
 
-namespace ut8ia\ecoclient\client\models;
+namespace ut8ia\ecoclient\components\client\models;
 
-use ut8ia\ecoclient\client\models\data\ResponseDataModel;
+use ut8ia\ecoclient\components\client\models\data\ReportResponseDataModel;
 use Yii;
 use yii\base\Model;
 
-class ResponseModel extends Model
+class ReportResponseModel extends Model
 {
 
     public $data;
@@ -47,17 +47,14 @@ class ResponseModel extends Model
      */
     public function validateData()
     {
-        $this->dataModel = new ResponseDataModel();
-        $this->dataModel->load(['ResponseDataModel' => $this->data]);
-        return $this->dataModel->validate();
+        $this->dataModel = new ReportResponseDataModel();
+        $this->dataModel->load(['ReportResponseDataModel' => $this->data]);
+        if ($this->dataModel->validate()) {
+            return true;
+        }
+        $this->addError('data error' . $this->dataModel->errors[0]);
+        return false;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isSuccess()
-    {
-        return $this->dataModel->success;
-    }
 
 }

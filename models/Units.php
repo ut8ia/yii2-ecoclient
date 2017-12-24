@@ -16,12 +16,18 @@ use Yii;
  */
 class Units extends \yii\db\ActiveRecord
 {
+
+
+    const STATUS_ACTIVE = 'active';
+    const STATUS_PASSIVE = 'passive';
+
+
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'units';
+        return '{{units}}';
     }
 
     /**
