@@ -38,14 +38,14 @@ class m171223_205721_init_functionality extends Migration
 
         $this->createTable(Parameters::tableName(), [
             'id' => $this->integer(11)->notNull(),
-            'type' => $this->integer(11)->notNull(),
+            'type' => "enum('temperature','humidity','dust10','dust25','gas')",
             'value' => $this->integer(11)->notNull(),
             'report_id' => $this->integer(11)->notNull(),
         ], $tableOptions);
 
         $this->addPrimaryKey('parameters_pk', Parameters::tableName(), 'id');
         $this->alterColumn(Parameters::tableName(), 'id', $this->integer(11) . ' NOT NULL AUTO_INCREMENT');
-        
+
     }
 
     public function down()

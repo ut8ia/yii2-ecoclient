@@ -85,7 +85,7 @@ class ReportBuilder extends BaseObject
         /** @var $report Reports */
         foreach ($this->reports as $report) {
             $this->processParams($report);
-            $this->labels[] = $report->started;
+            $this->labels[] = $report->formed;
             $count++;
         }
         return $count;
