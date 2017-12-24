@@ -1,5 +1,9 @@
 # yii2-ecoclient
-client library for ecotower service
+client library for ecotower service.
+
+according to swagger api :
+https://app.swaggerhub.com/apis/ut8ia/ecoTower/1.0.0
+
 
 For installation add in composer json :
 -
@@ -23,7 +27,7 @@ set in params-local.php your credentials :
 ```
 
 config module in main.php :
-
+-
 ```
 'modules' => [
 ...
@@ -33,3 +37,14 @@ config module in main.php :
     ]
 
 ```
+
+try to fetch reports from city by cron console call {city id}:
+-
+```
+./yii ecoclient/retrieve/cityreport 1
+
+```
+
+also you can use web view example of your reports :
+-
+ https://yoursite.com/ecoclient/display
