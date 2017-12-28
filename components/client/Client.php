@@ -11,7 +11,7 @@ use yii\base\Model;
  * Class Client
  * @package ut8ia\ecoclient\client
  */
-class Client 
+class Client
 {
 
     private $host;
