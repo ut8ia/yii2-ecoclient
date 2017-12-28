@@ -6,13 +6,12 @@ use ut8ia\ecoclient\components\client\models\CityreportsResponseModel;
 use ut8ia\ecoclient\components\client\models\ReportResponseModel;
 use ut8ia\ecoclient\models\Parameters;
 use ut8ia\ecoclient\models\Reports;
-use yii\base\BaseObject;
 
 /**
  * Class Retriever
  * @package ut8ia\ecoclient\client
  */
-class Retriever extends BaseObject
+class Retriever
 {
 
     /**
@@ -24,7 +23,7 @@ class Retriever extends BaseObject
     const ENDPOINT_CITYREPORTS = '/v1/cityreport';
 
 
-    public function init()
+    public function __construct()
     {
         $this->client = new Client();
     }

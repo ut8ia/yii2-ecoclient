@@ -2,7 +2,6 @@
 
 namespace ut8ia\ecoclient\components\client;
 
-use yii\base\BaseObject;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\InvalidParamException;
@@ -12,7 +11,7 @@ use yii\base\Model;
  * Class Client
  * @package ut8ia\ecoclient\client
  */
-class Client extends BaseObject
+class Client 
 {
 
     private $host;
@@ -22,7 +21,7 @@ class Client extends BaseObject
     /** @var  $responseModel Model */
     public $responseModel;
 
-    public function init()
+    public function __construct()
     {
         $this->host = Yii::$app->params['ecoclient']['apihost'];
         $this->key = Yii::$app->params['ecoclient']['apikey'];
