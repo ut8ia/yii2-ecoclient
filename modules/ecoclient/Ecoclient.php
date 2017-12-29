@@ -11,7 +11,8 @@ use Yii;
 class Ecoclient extends Module
 {
 
-    
+    const defaultDbTablesPrefix = '';
+
     public function init()
     {
         Yii::setAlias('ut8ia', $this->getBasePath());

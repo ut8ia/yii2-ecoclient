@@ -2,7 +2,9 @@
 
 namespace ut8ia\ecoclient\models;
 
+use ut8ia\ecoclient\modules\ecoclient\Ecoclient;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "parameters".
@@ -26,7 +28,8 @@ class Parameters extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{parameters}}';
+        $dbTablesPrefix = ArrayHelper::getValue(Yii::$app->params, 'ecoclient.dbTablesPrefix', Ecoclient::defaultDbTablesPrefix);
+        return str_replace('%', $dbTablesPrefix, '{{%parameters}}');
     }
 
     /**
