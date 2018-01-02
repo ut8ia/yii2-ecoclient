@@ -17,7 +17,7 @@
   },
   "minimum-stability": "dev",
   "require": {
-    "php": ">7.0",
+    "php": ">5.5",
     "2amigos/yii2-chartjs-widget" : "~2.0"
   }
 }
