@@ -4,13 +4,12 @@ namespace ut8ia\ecoclient\helpers;
 
 use ut8ia\ecoclient\models\Parameters;
 use ut8ia\ecoclient\models\Reports;
-use yii\base\BaseObject;
 
 /**
  * Class ReportHelper
  * @package common\helpers
  */
-class ReportBuilder extends BaseObject
+class ReportBuilder
 {
 
     /** @var int $limit */
