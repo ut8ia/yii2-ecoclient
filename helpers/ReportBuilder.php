@@ -132,11 +132,14 @@ class ReportBuilder
      * Sets the value for the start point of the report time scale
      * @param $time date/time string according to http://php.net/manual/ru/datetime.formats.php
      */
-    public function setSirstTimelinePoint($time)
+    public function setFirstTimelinePoint($time)
     {
         $this->firstTimelinePoint = new DateTime($time);
     }
 
+    /**
+     * @return DateTime
+     */
     private function getFirstTimelinePoint()
     {
         if (empty($this->firstTimelinePoint)) {
