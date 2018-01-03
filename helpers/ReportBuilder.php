@@ -2,7 +2,7 @@
 
 namespace ut8ia\ecoclient\helpers;
 
-use ut8ia\ecoclient\models\Parameters;
+use DateTime;
 use ut8ia\ecoclient\models\Reports;
 
 /**
@@ -12,9 +12,10 @@ use ut8ia\ecoclient\models\Reports;
 class ReportBuilder
 {
 
-    /** @var int $limit */
-    public $limit = 96;
-
+    /**
+     * @var DateTime 
+     */
+    private $firstTimelinePoint;
     private $labels = [];
     private $temperature = [];
     private $humidity = [];
@@ -122,9 +123,28 @@ class ReportBuilder
     {
         $this->reports = Reports::find()
             ->with('parameters')
-            ->limit($this->limit)
-            ->orderBy(['id' => SORT_DESC])
+            ->where(['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ISO8601)])            
+            ->orderBy(['formed' => SORT_ASC])
             ->all();
     }
+
+    /**
+     * Sets the value for the start point of the report time scale
+     * @param $time date/time string according to http://php.net/manual/ru/datetime.formats.php
+     */
+    public function setSirstTimelinePoint($time)
+    {
+        $this->firstTimelinePoint = new DateTime($time);
+    }
+
+    private function getFirstTimelinePoint()
+    {
+        if (empty($this->firstTimelinePoint)) {
+            $this->firstTimelinePoint = new DateTime('yesterday');
+        }
+        return $this->firstTimelinePoint;
+    }
+
+
 
 }

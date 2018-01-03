@@ -22,7 +22,7 @@ class DisplayController extends Controller
     public function actionIndex()
     {
         $report = new ReportBuilder();
-        $report->limit = 96;
+        $report->setFirstTimelinePoint('yesterday');
         $report->makeReport();
 
         return $this->render('index',
