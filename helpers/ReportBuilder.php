@@ -3,6 +3,7 @@
 namespace ut8ia\ecoclient\helpers;
 
 use DateTime;
+use ut8ia\ecoclient\models\Parameters;
 use ut8ia\ecoclient\models\Reports;
 
 /**
@@ -13,7 +14,7 @@ class ReportBuilder
 {
 
     /**
-     * @var DateTime 
+     * @var DateTime
      */
     private $firstTimelinePoint;
     private $labels = [];
@@ -26,7 +27,16 @@ class ReportBuilder
     /** @var array $reports */
     private $reports;
 
-    const PARAM_TYPES = ['temperature', 'humidity', 'dust10', 'dust25', 'gas'];
+    /**
+     * possible parameter types
+     */
+    const PARAM_TYPES = [
+        Parameters::TYPE_TEMPERATURE,
+        Parameters::TYPE_HUMIDITY,
+        Parameters::TYPE_DUST10,
+        Parameters::TYPE_DUST25,
+        Parameters::TYPE_GAS
+    ];
 
     /**
      * @return int
@@ -123,7 +133,7 @@ class ReportBuilder
     {
         $this->reports = Reports::find()
             ->with('parameters')
-            ->where(['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ISO8601)])            
+            ->where(['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ISO8601)])
             ->orderBy(['formed' => SORT_ASC])
             ->all();
     }
@@ -147,7 +157,6 @@ class ReportBuilder
         }
         return $this->firstTimelinePoint;
     }
-
 
 
 }
