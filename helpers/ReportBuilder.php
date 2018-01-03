@@ -95,7 +95,8 @@ class ReportBuilder
         /** @var $report Reports */
         foreach ($this->reports as $report) {
             $this->processParams($report);
-            $this->labels[] = $report->formed;
+//            var_dump($report->formed);die;
+            $this->labels[] = date('Y.m.d H:i', strtotime($report->formed));
             $count++;
         }
         return $count;
