@@ -135,7 +135,7 @@ class ReportBuilder
     {
         $this->reports = Reports::find()
             ->with('parameters')
-            ->where(['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ISO8601)])
+            ->where(['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ATOM)])
             ->orderBy(['formed' => SORT_ASC])
             ->all();
     }
@@ -155,7 +155,7 @@ class ReportBuilder
     private function getFirstTimelinePoint()
     {
         if (empty($this->firstTimelinePoint)) {
-            $this->firstTimelinePoint = new DateTime('yesterday');
+            $this->firstTimelinePoint = new DateTime(date('Y-m-d H:i', time() - 86400));
         }
         return $this->firstTimelinePoint;
     }
