@@ -13,9 +13,11 @@ use ut8ia\ecoclient\models\Reports;
 class ReportBuilder
 {
 
-    /**
-     * @var DateTime
-     */
+    public $dateFormat = 'd.m.Y';
+    public $dateTimeFormat = 'd.m.Y H:i';
+    public $formatSwitchCount = 10000;
+
+    /** @var DateTime */
     private $firstTimelinePoint;
     private $labels = [];
     private $temperature = [];
@@ -23,7 +25,6 @@ class ReportBuilder
     private $dust10 = [];
     private $dust25 = [];
     private $gas = [];
-
     /** @var array $reports */
     private $reports;
 
@@ -91,12 +92,12 @@ class ReportBuilder
      */
     private function processReports()
     {
-        $count = 0;
+        $count = count($this->reports);
+        $format = ($count > $this->formatSwitchCount) ? $this->dateFormat : $this->dateTimeFormat;
         /** @var $report Reports */
         foreach ($this->reports as $report) {
             $this->processParams($report);
-//            var_dump($report->formed);die;
-            $this->labels[] = date('Y.m.d H:i', strtotime($report->formed));
+            $this->labels[] = date($format, strtotime($report->formed));
             $count++;
         }
         return $count;

@@ -4,6 +4,7 @@
 
 $this->title = 'EсoClient';
 use dosamigos\chartjs\ChartJs;
+use ut8ia\ecoclient\modules\ecoclient\Ecoclient;
 
 ?>
 <div class="site-index">
@@ -15,12 +16,20 @@ use dosamigos\chartjs\ChartJs;
         <?= ChartJs::widget([
             'type' => 'line',
             'options' => [
-                'height' => 200,
-                'width' => 400
             ],
             'data' => [
                 'labels' => $labels,
                 'datasets' => [
+                    [
+                        'label' => "Max average level",
+                        'backgroundColor' => "rgba(132,255,199,0.2)",
+                        'borderColor' => "rgba(132,255,199,1)",
+                        'pointBackgroundColor' => "rgba(132,255,199,1)",
+                        'pointBorderColor' => "#fff",
+                        'pointHoverBackgroundColor' => "#fff",
+                        'pointHoverBorderColor' => "rgba(132,255,199,1)",
+                        'data' => array_fill(0,count($labels),Ecoclient::MAX_AVERAGE_YEAR_DUST_LEVEL)
+                    ],
                     [
                         'label' => "2,5 micrometers",
                         'backgroundColor' => "rgba(255,99,132,0.2)",
