@@ -44,8 +44,14 @@ class ReportBuilder
     /**
      * @return ReportBuilder
      */
-    public function makeReport()
+    public function makeReport($from = null, $to = null)
     {
+        if (isset($from)) {
+            $this->setFirstTimelinePoint($from);
+        }
+        if (isset($to)) {
+            $this->setLastTimelinePoint($to);
+        }
         $this->findReports();
         if (empty($this->reports)) {
             return 0;
