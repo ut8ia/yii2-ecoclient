@@ -12,13 +12,15 @@ use ut8ia\ecoclient\models\Reports;
  */
 class ReportBuilder
 {
-
+    
     public $dateFormat = 'd.m.Y';
     public $dateTimeFormat = 'd.m.Y H:i';
     public $formatSwitchCount = 10000;
 
     /** @var DateTime */
     private $firstTimelinePoint;
+    /** @var DateTime */
+    private $lastTimelinePoint;
     private $labels = [];
     private $temperature = [];
     private $humidity = [];
@@ -40,15 +42,22 @@ class ReportBuilder
     ];
 
     /**
-     * @return int
+     * @return ReportBuilder
      */
-    public function makeReport()
+    public function makeReport($from = null, $to = null)
     {
+        if (isset($from)) {
+            $this->setFirstTimelinePoint($from);
+        }
+        if (isset($to)) {
+            $this->setLastTimelinePoint($to);
+        }
         $this->findReports();
         if (empty($this->reports)) {
             return 0;
         }
-        return $this->processReports();
+        $this->processReports();
+        return $this;
     }
 
     /** @return array */
@@ -135,7 +144,12 @@ class ReportBuilder
     {
         $this->reports = Reports::find()
             ->with('parameters')
-            ->where(['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ATOM)])
+            ->where(
+                [
+                    'and',
+                    ['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ATOM)],
+                    ['<=', 'formed', $this->getLastTimelinePoint()->format(DateTime::ATOM)]
+                ])            
             ->orderBy(['formed' => SORT_ASC])
             ->all();
     }
@@ -143,22 +157,46 @@ class ReportBuilder
     /**
      * Sets the value for the start point of the report time scale
      * @param $time date/time string according to http://php.net/manual/ru/datetime.formats.php
+     * @return ReportBuilder
      */
     public function setFirstTimelinePoint($time)
     {
         $this->firstTimelinePoint = new DateTime($time);
+        return $this;
     }
 
     /**
+     * Начало шкалы времени. По умолчанию - начало предыдущих суток
      * @return DateTime
      */
     private function getFirstTimelinePoint()
     {
         if (empty($this->firstTimelinePoint)) {
-            $this->firstTimelinePoint = new DateTime(date('Y-m-d H:i', time() - 86400));
+            $this->firstTimelinePoint = new DateTime('yesterday');
         }
         return $this->firstTimelinePoint;
     }
 
+    /**
+     * Sets the value for the start point of the report time scale
+     * @param $time date/time string according to http://php.net/manual/ru/datetime.formats.php
+     * @return ReportBuilder
+     */
+    public function setLastTimelinePoint($time)
+    {
+        $this->lastTimelinePoint = new DateTime($time);
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    private function getLastTimelinePoint()
+    {
+        if (empty($this->lastTimelinePoint)) {
+            $this->lastTimelinePoint = new DateTime('now');
+        }
+        return $this->lastTimelinePoint;
+    }
 
 }
