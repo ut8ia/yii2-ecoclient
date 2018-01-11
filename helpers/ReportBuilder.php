@@ -50,8 +50,7 @@ class ReportBuilder
         if (empty($this->reports)) {
             return 0;
         }
-        $this->processReports();
-        return $this;
+        return $this->processReports();
     }
 
     /** @return array */
