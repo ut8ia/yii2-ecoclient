@@ -14,6 +14,7 @@ class Ecoclient extends Module
 
     const defaultDbTablesPrefix = '';
     const MAX_AVERAGE_YEAR_DUST_LEVEL = 10;
+    const MAX_AVERAGE_DAILY_DUST_LEVEL = 25;
 
     public function init()
     {
