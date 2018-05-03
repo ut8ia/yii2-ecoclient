@@ -12,10 +12,14 @@ use ut8ia\ecoclient\models\Reports;
  */
 class ReportBuilder
 {
-    
+
     public $dateFormat = 'd.m.Y';
     public $dateTimeFormat = 'd.m.Y H:i';
     public $formatSwitchCount = 10000;
+
+    /** @var int $unitId */
+    public $unitId = 1;
+
 
     /** @var DateTime */
     private $firstTimelinePoint;
@@ -142,7 +146,8 @@ class ReportBuilder
                     'and',
                     ['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ATOM)],
                     ['<=', 'formed', $this->getLastTimelinePoint()->format(DateTime::ATOM)]
-                ])            
+                ])
+            ->andWhere(['unit_id' => $this->unitId])
             ->orderBy(['formed' => SORT_ASC])
             ->all();
     }
