@@ -2,10 +2,12 @@
 
 namespace ut8ia\ecoclient\components\client;
 
-use ut8ia\ecoclient\components\client\models\CityreportsResponseModel;
-use ut8ia\ecoclient\components\client\models\ReportResponseModel;
+use ut8ia\ecoclient\components\client\models\response\CityreportsResponseModel;
+use ut8ia\ecoclient\components\client\models\response\ReportResponseModel;
+use ut8ia\ecoclient\components\client\models\response\UnitsResponseModel;
 use ut8ia\ecoclient\models\Parameters;
 use ut8ia\ecoclient\models\Reports;
+use ut8ia\ecoclient\models\Units;
 
 /**
  * Class Retriever
@@ -20,12 +22,28 @@ class Retriever
     private $client;
 
     const ENDPOINT_REPORT = '/v1/report';
+    const ENDPOINT_CITY = '/v1/city';
     const ENDPOINT_CITYREPORTS = '/v1/cityreport';
 
 
     public function __construct()
     {
         $this->client = new Client();
+    }
+
+    public function fetchUnits($cityId)
+    {
+        $this->client->endpoint = self::ENDPOINT_CITY . '/' . $cityId;
+        $this->client->responseModel = new UnitsResponseModel();
+        if (!$this->client->makeRequest()) {
+            return $this->client->responseModel->errors;
+        }
+
+        foreach ($this->client->responseModel->getUnits() as $unit) {
+            $this->loadUnit($unit);
+        }
+
+        return true;
     }
 
     /**
@@ -68,6 +86,17 @@ class Retriever
         return $this->loadReport($this->client->responseModel->data);
     }
 
+    private function loadUnit($unit)
+    {
+        $storedUnit = Units::findOne($unit['id']);
+        if (empty($storedUnit)) {
+            $storedUnit = new Units($unit);
+            $storedUnit->save();
+        } else {
+            $storedUnit->updateAttributes($unit);
+        }
+    }
+
 
     /**
      * @param array $data
@@ -78,7 +107,7 @@ class Retriever
 
         $report = new Reports();
         $report->id = $data['report']['id'];
-        $report->unit_id = $data['report']['id'];
+        $report->unit_id = $data['report']['unit_id'];
         $report->formed = $data['report']['formed'];
         if (!$report->save()) {
             return false;

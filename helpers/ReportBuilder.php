@@ -17,10 +17,6 @@ class ReportBuilder
     public $dateTimeFormat = 'd.m.Y H:i';
     public $formatSwitchCount = 10000;
 
-    /** @var int $unitId */
-    public $unitId = 1;
-
-
     /** @var DateTime */
     private $firstTimelinePoint;
     /** @var DateTime */
@@ -46,11 +42,13 @@ class ReportBuilder
     ];
 
     /**
+     * @param int $unitId
      * @return ReportBuilder
      */
-    public function makeReport()
+    public function makeReport($unitId)
     {
-        $this->findReports();
+
+        $this->findReports($unitId);
         if (empty($this->reports)) {
             return 0;
         }
@@ -61,6 +59,11 @@ class ReportBuilder
     public function getLabels()
     {
         return $this->labels;
+    }
+
+    public function getCount()
+    {
+        return count($this->labels);
     }
 
     /** @return array */
@@ -136,8 +139,7 @@ class ReportBuilder
         }
     }
 
-
-    private function findReports()
+    private function findReports($unitId)
     {
         $this->reports = Reports::find()
             ->with('parameters')
@@ -147,7 +149,7 @@ class ReportBuilder
                     ['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ATOM)],
                     ['<=', 'formed', $this->getLastTimelinePoint()->format(DateTime::ATOM)]
                 ])
-            ->andWhere(['unit_id' => $this->unitId])
+            ->andWhere(['unit_id' => $unitId])
             ->orderBy(['formed' => SORT_ASC])
             ->all();
     }
