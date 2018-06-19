@@ -12,7 +12,7 @@ use ut8ia\ecoclient\models\Reports;
  */
 class ReportBuilder
 {
-    
+
     public $dateFormat = 'd.m.Y';
     public $dateTimeFormat = 'd.m.Y H:i';
     public $formatSwitchCount = 10000;
@@ -42,11 +42,13 @@ class ReportBuilder
     ];
 
     /**
+     * @param int $unitId
      * @return ReportBuilder
      */
-    public function makeReport()
+    public function makeReport($unitId)
     {
-        $this->findReports();
+
+        $this->findReports($unitId);
         if (empty($this->reports)) {
             return 0;
         }
@@ -57,6 +59,11 @@ class ReportBuilder
     public function getLabels()
     {
         return $this->labels;
+    }
+
+    public function getCount()
+    {
+        return count($this->labels);
     }
 
     /** @return array */
@@ -132,8 +139,7 @@ class ReportBuilder
         }
     }
 
-
-    private function findReports()
+    private function findReports($unitId)
     {
         $this->reports = Reports::find()
             ->with('parameters')
@@ -142,7 +148,8 @@ class ReportBuilder
                     'and',
                     ['>=', 'formed', $this->getFirstTimelinePoint()->format(DateTime::ATOM)],
                     ['<=', 'formed', $this->getLastTimelinePoint()->format(DateTime::ATOM)]
-                ])            
+                ])
+            ->andWhere(['unit_id' => $unitId])
             ->orderBy(['formed' => SORT_ASC])
             ->all();
     }

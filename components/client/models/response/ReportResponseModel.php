@@ -1,6 +1,6 @@
 <?php
 
-namespace ut8ia\ecoclient\components\client\models;
+namespace ut8ia\ecoclient\components\client\models\response;
 
 use ut8ia\ecoclient\components\client\models\data\ReportResponseDataModel;
 use Yii;

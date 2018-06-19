@@ -42,8 +42,7 @@ class Units extends \yii\db\ActiveRecord
             [['id', 'city_id', 'lattitude', 'longitude', 'status'], 'required'],
             [['city_id'], 'integer'],
             [['status'], 'string'],
-            [['apikey', 'lattitude', 'longitude'], 'string', 'max' => 32],
-            [['hashkey'], 'string', 'max' => 16],
+            [['lattitude', 'longitude'], 'string', 'max' => 32],
             [['comment'], 'string', 'max' => 128],
         ];
     }

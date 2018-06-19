@@ -1,10 +1,9 @@
 <?php
 
-namespace ut8ia\ecoclient\components\client\models;
+namespace ut8ia\ecoclient\components\client\models\response;
 
-use yii\base\Model;
 
-class CityreportsResponseModel extends Model
+class CityreportsResponseModel extends ResponseModel
 {
 
     public $data;
@@ -17,17 +16,6 @@ class CityreportsResponseModel extends Model
         return [
             ['data', 'checkReports'],
         ];
-    }
-
-    /**
-     * @param array $data
-     * @param null $formName
-     * @return bool
-     */
-    public function load($data, $formName = null)
-    {
-        $this->data = $data[$this->formName()];
-        return true;
     }
 
     /**
