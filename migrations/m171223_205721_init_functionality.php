@@ -20,7 +20,7 @@ class m171223_205721_init_functionality extends Migration
             'lattitude' => $this->string(32)->defaultValue(null),
             'longitude' => $this->string(32)->defaultValue(null),
             'status' => "enum('active', 'passive')",
-            'comment' => $this->string(32)->null()
+            'comment' => $this->string(128)->null()
         ], $tableOptions);
 
         $this->createIndex('units_id_uniq', Units::tableName(), 'id', true);
