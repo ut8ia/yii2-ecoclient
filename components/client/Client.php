@@ -48,14 +48,14 @@ class Client
             curl_setopt($ch, CURLOPT_POST, 1);
         }
 
-        try {
-            $response = curl_exec($ch);
-        } catch (\Exception $e) {
+        $response = curl_exec($ch);
+        if (false === $response) {
+            $info = curl_getinfo($ch,  CURLINFO_EFFECTIVE_URL);
+            $this->responseModel->addError('error making request to '. $info);
             return false;
         }
 
         return $this->catchResponse($response);
-
     }
 
 
