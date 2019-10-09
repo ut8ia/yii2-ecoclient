@@ -54,7 +54,7 @@ class Client
             $this->responseModel->addError('error making request to '. $info);
             return false;
         }
-
+        
         return $this->catchResponse($response);
     }
 
