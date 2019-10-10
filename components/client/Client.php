@@ -3,15 +3,13 @@
 namespace ut8ia\ecoclient\components\client;
 
 use Yii;
-use yii\base\InvalidConfigException;
-use yii\base\InvalidParamException;
 use yii\base\Model;
 
 /**
  * Class Client
  * @package ut8ia\ecoclient\client
  */
-class Client
+class Client extends Model
 {
 
     private $host;
@@ -51,7 +49,7 @@ class Client
         $response = curl_exec($ch);
         if (false === $response) {
             $info = curl_getinfo($ch,  CURLINFO_EFFECTIVE_URL);
-            $this->responseModel->addError('error making request to '. $info);
+            $this->addError($info, 'error making request');
             return false;
         }
         
@@ -62,8 +60,6 @@ class Client
     /**
      * @param $response
      * @return boolean
-     * @throws InvalidConfigException
-     * @throws InvalidParamException
      */
     private function catchResponse($response)
     {

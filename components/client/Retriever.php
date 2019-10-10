@@ -19,7 +19,7 @@ class Retriever
     /**
      * @var Client
      */
-    private $client;
+    public $client;
 
     const ENDPOINT_REPORT = '/v1/report';
     const ENDPOINT_CITY = '/v1/city';
